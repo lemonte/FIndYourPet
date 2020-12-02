@@ -1,3 +1,10 @@
+<?php
+    if(($_COOKIE["PHPSESSID"] == null)){
+        header("Location:./index.php");
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-Br">
 
@@ -39,43 +46,124 @@
         <li><a href="./index.php" class="white-text"><i class="material-icons white-text">power_settings_new</i>Sair </a></li>
     </ul>
     <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-
+    
 
     <div class="row">
         <div class="col s3"> </div>
         <div class="col s8">
             <div class="section">
+            <?php
+                if (isset($_GET["msg"])) { 
+                    $mensagem = $_GET["msg"];
+                    echo "<FONT color=red>$mensagem</FONT>";
+                }
+            ?>
                 <div class="row">
                     <?php
-                    $array = array(
-                        '{"nome":"Joao", "email":"teste@teste.teste", "senha":"teste", "status" :true, "telefone" : "27 99999-9999"}',
-                        '{"nome":"Teste", "email":"teste2@teste.teste", "senha":"teste", "status" :true, "telefone" : "27 99999-9999"}',
-                        '{"nome":"Fulano", "email":"teste4@teste.teste", "senha":"teste", "status" :false, "telefone" : "27 99999-9999"}'
-                    );
+                    
+
+                    require './DAO/listarAdm.php';
+                    $array = lista();
                     foreach ($array as $value) {
-                        $arr = json_decode($value, true);
-                        $nome = $arr["nome"];
-                        $email = $arr["email"];
-                        $senha = $arr["senha"];
-                        $status = $arr["status"];
-                        $telefone = $arr["telefone"];
-                        print("   
+                        $idConta = $value["idConta"];
+                        $nome = $value["nome"];
+                        $email = $value["email"];
+                        $telefone = $value["telefone"];
+                        $imagem = $value["imagem"];
+                        echo"   
          <div class='col s12 m4 l3'>
          <div class='card hoverable' style='height: 450px;'>
          <div class='card-image' >
-         <img class='activator' src='https://www.abrafac.org.br/wp-content/uploads/2019/09/icone-perfil.png' style='height: 250px;' />
-                <button onclick='function_deletar($value)'   class='btn-floating halfway-fab' style='background-color: #2C2C8C;'><i class='material-icons'>delete</i></button>
-                <button onclick='function_editar($value)'  data-target='modal_edit'  class='btn-floating modal-trigger halfway-fab left' style='background-color: #2C2C8C;' ><i class='material-icons'>edit</i></button>
+            <img class='activator' src='data:image/jpeg;base64,".base64_encode( $imagem )."' style='height: 250px;' />
+                <form method='post' name='formDeletar' action='./DAO/excluirAdm.php' enctype = 'multipart/form-data'>
+                    <input type='hidden' name='idContaDeletar' value=$idConta/>
+                    <button onclick='javascript:formDeletar.submit()'   class='btn-floating halfway-fab' style='background-color: #2C2C8C;'><i class='material-icons'>delete</i></button>
+                </form>
+                <button onclick='function_editar()'  data-target='modal_edit $idConta'  class='btn-floating modal-trigger halfway-fab left' style='background-color: #2C2C8C;' ><i class='material-icons'>edit</i></button>
               </div>
               <div class='card-content center'>
               <span class='card-title center'> $nome </span>
                 <p>$telefone</p></br>
                 <p>$email</p>
-                <button data-target='modal_card' class='btn modal-trigger' style='background-color: #2C2C8C;'  onclick='myFunction($value)'>
+                <button data-target='modal_card $idConta' class='btn modal-trigger' style='background-color: #2C2C8C;'  onclick='myFunction()'>
                 Ver mais sobre </button>
               </div>
             </div>
-          </div>");
+          </div>
+          
+          
+          
+          <div id='modal_card $idConta' class='modal'>
+        <div class='modal-content' style=' font-size: larger;'>
+            <h4 id='modal_nome_item' class='center'> </h4>
+            <div class='col s12 m7'>
+                <div class='row'>
+                    <div class='col s12 row center'><span style='font-weight: bolder; ' class='col s6 '>email</span>
+                        <div class='col s6' id='modal_email_item'>$email</div>
+                    </div>
+                    <div class='col s12 row center'><span style='font-weight: bolder;' class='col s6'>telefone</span>
+                        <div class='col s6' id='modal_telefone_item'>$telefone</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+    <div id='modal_edit $idConta' class='modal'>
+    
+    
+        <div class='modal-content'>
+        <form method='post' name='formEdicao$idConta' id='formEdicao' action='./DAO/editarAdm.php' enctype = 'multipart/form-data'>
+            <h4 class='center'>Usuários administrativos</h4>
+            <div class='row'>
+                <div class='input-field col s12'>
+                <input type='hidden' id='idConta'name='idConta' value='$idConta'/>
+                    <i class='material-icons prefix'>mode_edit</i>
+                    <input value='$nome' id='nome' name='nome' type='text' class='validate'/>
+                    <label for='nome'>Nome</label>
+                </div>
+                <div class='input-field col s12'>
+                    <i class='material-icons prefix'>mode_edit</i>
+                    <input value='$email' id='email' name='email' type='email' class='validate'/>
+                    <label for='email'>Email</label>
+                </div>
+                <div class='input-field col s12'>
+                    <i class='material-icons prefix'>mode_edit</i>
+                    <input id='senha' name='senha' placeholder='*******' type='password' class='validate'/>
+                    <label for='senha'>Senha</label>
+                </div>
+                <div class='input-field col s12'>
+                    <i class='material-icons prefix'>mode_edit</i>
+                    <input id='telefone' name='telefone' value='$telefone' type='text' class='validate'/>
+                    <label for='telefone'>Contato</label>
+                </div>
+            </div>
+        </div>
+        <div class='modal-footer'>
+            <a href='#!' class='modal-close left waves-effect waves-green btn-flat'>Descartar</a>
+            <button onclick='editar$idConta()' class=' waves-effect waves-green btn-flat'>Enviar</button>
+            </form>
+            </div>
+            
+            </div>
+            
+            <script>
+            function editar$idConta() {
+                document.getElementById('formEdicao$idConta').submit;
+            }
+            </script>
+            
+            
+            
+            
+            
+            ";
+            //<input type='submit' value='Salvar'/>
                     }
                     ?>
                     <div class='col s12 m4 l3'>
@@ -107,46 +195,43 @@
 
     <div id="modal_cadastro" class="modal">
         <div class="modal-content">
+        
             <h4 class="center">Usuários administrativos</h4>
-            <div class="switch">
-                <label>
-                    Off
-                    <input id="status-cadastro" type="checkbox">
-                    <span class="lever"></span>
-                    On
-                </label>
-            </div>
-
             <div class="row">
-                <form enctype="multipart/form-data">
+                
                     <div class="row">
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">mode_edit</i>
-                            <input placeholder="Fulano" id="nome-cadastro" type="text" class="validate">
-                            <label for="nome_animal">Nome</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">mode_edit</i>
-                            <input placeholder="teste@teste.teste" id="email-cadastro" type="email" class="validate">
-                            <label for="email">Email</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">mode_edit</i>
-                            <input id="senha-cadastro" placeholder="****" type="password" class="validate">
-                            <label for="senha">Senha</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">mode_edit</i>
-                            <input id="contato-cadastro" placeholder="(27)99999999" type="text" class="validate">
-                            <label for="contato">Contato</label>
-                        </div>
+                        <form method="post" name="formCadastro" action="./DAO/cadastro.php" enctype = "multipart/form-data">
+                            <div class="input-field col s12">
+                                Foto
+                                <input id="imagem" type="file" name="imagemCadastro">
+                            </div>
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">mode_edit</i>
+                                <input placeholder="Fulano" name="nomeCadastro"id="nome-cadastro" type="text" class="validate">
+                                <label for="nome_animal">Nome</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">mode_edit</i>
+                                <input placeholder="teste@teste.teste" name="emailCadastro"id="email-cadastro" type="email" class="validate">
+                                <label for="email">Email</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">mode_edit</i>
+                                <input name="passCadastro"id="senha-cadastro" placeholder="****" type="password" class="validate">
+                                <label for="senha">Senha</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">mode_edit</i>
+                                <input name="telefoneCadastro"id="contato-cadastro" placeholder="(27)99999999" type="text" class="validate">
+                                <label for="contato">Contato</label>
+                            </div>
+                        </form>
                     </div>
-                </form>
             </div>
         </div>
         <div class="modal-footer">
             <a href="#!" class="modal-close left waves-effect waves-green btn-flat">Descartar</a>
-            <button onclick="salvar_cadastro()" class="btn-flat">Enviar</button>
+            <a href='javascript:formCadastro.submit()' class="modal-close waves-effect waves-green btn-flat">Enviar</a>
         </div>
     </div>
 
@@ -154,71 +239,12 @@
 
 
 
-    <div id='modal_card' class='modal'>
-        <div class='modal-content' style=" font-size: larger;">
-            <h4 id="modal_nome_item" class="center"> </h4>
-            <div class='col s12 m7'>
-                <div class='row'>
-                    <div class='col s12 row center'><span style='font-weight: bolder; ' class="col s6 ">email</span>
-                        <div class="col s6" id="modal_email_item"></div>
-                    </div>
-                    <div class='col s12 row center'><span style='font-weight: bolder;' class="col s6 ">Senha</span>
-                        <div class="col s6" id="modal_senha_item"></div>
-                    </div>
-                    <div class='col s12 row center'><span style='font-weight: bolder;' class="col s6">status</span>
-                        <div class="col s6" id="modal_status_item"></div>
-                    </div>
-                    <div class='col s12 row center'><span style='font-weight: bolder;' class="col s6">telefone</span>
-                        <div class="col s6" id="modal_telefone_item"></div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
+    
 
 
 
 
-    <div id="modal_edit" class="modal">
-        <div class="modal-content">
-            <h4 class="center">Usuários administrativos</h4>
-            <div class="switch">
-                <label>
-                    Off
-                    <input id="status" type="checkbox">
-                    <span class="lever"></span>
-                    On
-                </label>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">mode_edit</i>
-                    <input placeholder="Fulado" id="nome" type="text" class="validate">
-                    <label for="nome_animal">Nome</label>
-                </div>
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">mode_edit</i>
-                    <input placeholder="teste@teste.teste" id="email" type="email" class="validate">
-                    <label for="email">Email</label>
-                </div>
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">mode_edit</i>
-                    <input id="senha" placeholder="****" type="password" class="validate">
-                    <label for="senha">Senha</label>
-                </div>
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">mode_edit</i>
-                    <input id="contato" placeholder="(27)99999999" type="text" class="validate">
-                    <label for="contato">Contato</label>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-close left waves-effect waves-green btn-flat">Descartar</a>
-            <button onclick="salvar_edicao()" class="btn-flat">Enviar</button>
-        </div>
-    </div>
+    
 
 
 
