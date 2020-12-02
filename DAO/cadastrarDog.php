@@ -24,7 +24,7 @@
         cadastrar($nome, $dono, $breve_descricao, $sobre, $idade, $sexo, $foto, $telefone, $animal);
 
 
-        header("Location:$anterior?msg=Enviado com sucesso, espere a aprovação ou contato") ;               
+        header("Location:$anterior") ;               
     } else {
         echo"
         <script language='javascript' type='text/javascript'>

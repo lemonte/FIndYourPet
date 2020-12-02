@@ -2,6 +2,7 @@
     function cadastrar($email, $senha, $nome, $foto, $telefone){
         require_once "./conexao.php";
         $conexao = conectar();
+        $anterior = $_SERVER['HTTP_REFERER'];
 
         $sql = "INSERT INTO adm (senha, email, nome, telefone, imagem) 
                 VALUES ('$senha', '$email', '$nome', '$telefone', '$foto')";

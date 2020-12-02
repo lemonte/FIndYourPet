@@ -1,6 +1,11 @@
 <?php
-    if(($_COOKIE["PHPSESSID"] == null)){
-      header("Location:./index.php");
+   if(isset($_COOKIE["PHPSESSID"])){
+        if($_COOKIE["PHPSESSID"] == null){
+            header("Location:index.php");
+        }
+  }else{
+      header("Location:index.php");
+      
   }
 ?>
 

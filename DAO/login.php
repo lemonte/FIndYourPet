@@ -16,12 +16,8 @@
 
         $validacao = logar($email);
 
-        if (mysqli_num_rows($validacao)<=0){
-            $arr_cookie_options = array (
-                'expires' => time() - 3600,
-                'path' => '/'
-            );
-            setcookie("PHPSESSID", "", $arr_cookie_options);
+        if (mysqli_num_rows($validacao)!=1){
+            setcookie("PHPSESSID", null);
             session_destroy();
             echo"<script language='javascript' type='text/javascript'>
                     alert('Login e/ou senha incorretos!');
@@ -29,21 +25,15 @@
                 </script>";
             exit("Login e/ou senha incorretos!");
     
-        }
+        }else{
         while ( $registro = mysqli_fetch_assoc($validacao) ) {
             $idConta = $registro["idConta"];
             $sessao = $registro["senha"];
 
-            if (password_verify($pass, $sessao)){
+            if ($pass == $sessao){
                 $_SESSION["id"] = $idConta;
-                var_dump($_SESSION["id"]);
-                break;
             }else{
-                $arr_cookie_options = array (
-                    'expires' => time() - 3600,
-                    'path' => '/'
-                );
-                setcookie("PHPSESSID", "", $arr_cookie_options);
+                setcookie("PHPSESSID", null);
                 session_destroy();
                 echo"<script language='javascript' type='text/javascript'>
                         alert('Login e/ou senha incorretos!');
@@ -61,18 +51,14 @@
         setcookie("sessao", $sessao, $arr_cookie_options);*/
         header("Location:$proximo");
           
-
+        }
     } else {
-        $arr_cookie_options = array (
-            'expires' => time() - 3600,
-            'path' => '/'
-        );
-        setcookie("PHPSESSID", "", $arr_cookie_options);
+        setcookie("PHPSESSID", null);
         session_destroy();
         echo"
-        <script language='javascript' type='text/javascript'>
+       <script language='javascript' type='text/javascript'>
             alert('$msgErro');
             window.location.href='../index.php';
-        </script>";                      
+        </script>";               
     }
  ?>

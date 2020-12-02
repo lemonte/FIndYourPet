@@ -1,9 +1,5 @@
 <?php
-  $arr_cookie_options = array (
-    'expires' => time() - 3600,
-    'path' => '/'
-);
-setcookie("PHPSESSID", "", $arr_cookie_options);
+setcookie("PHPSESSID", null);
 ?>
 
 <!DOCTYPE html>

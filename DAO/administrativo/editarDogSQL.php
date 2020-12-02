@@ -1,6 +1,5 @@
 <?php
-    function editar(
-$idPet,
+    function editar($idPet,
 $nome,
 $dono,
 $breve_descricao,
@@ -9,13 +8,14 @@ $idade,
 $sexo,
 $telefone,
 $animal,
-$imagem
-    ){
+$imagem){
         require './conexao.php';
         $conexao = conectar();
+        $idPet = intval("$idPet");
+        
 
-        if($imagem != null){
-        $sql = "UPDATE pet SET nome = '$nome',
+       if($imagem != null){
+       $sql = "UPDATE pet SET nome = '$nome',
             dono = '$dono',
             breve_descricao = '$breve_descricao',
             sobre = '$sobre',
@@ -23,7 +23,8 @@ $imagem
             sexo = '$sexo',
             imagem = '$imagem',
             telefone = '$telefone',
-            animal = '$animal' WHERE pet.idPet = '$idPet'";
+            animal = '$animal'
+            WHERE pet.idPet = '$idPet'";
         }else{
 
         $sql = "UPDATE pet SET nome = '$nome',
@@ -33,12 +34,13 @@ $imagem
             idade = '$idade',
             sexo = '$sexo',
             telefone = '$telefone',
-            animal = '$animal' WHERE pet.idPet = '$idPet'";
-        }
+            animal = '$animal'
+            WHERE pet.idPet = '$idPet'";
+        
 
+        
+        }
         mysqli_query($conexao, $sql) or die ( mysqli_error($conexao) );
-        
-        
     }
     
  ?>

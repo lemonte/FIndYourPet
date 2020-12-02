@@ -10,12 +10,15 @@
     $sexo = $_POST["sexo"];
     $telefone = $_POST["telefone"];
     $animal = $_POST["animal"]; 
-    $imagem = $_FILES["imagem"];
 
+if(isset($_FILES["imagem"])){
+    $imagem = $_FILES["imagem"];
     $tamanhoImg = $imagem["size"];
-    $arqAberto = fopen ( $imagem["tmp_name"], "r" );
-    $foto = addslashes( fread ( $arqAberto , $tamanhoImg ) );
-    
+    $arqAberto = @fopen ( $imagem["tmp_name"], "r" );
+    $foto = @addslashes( @fread ( $arqAberto , $tamanhoImg ) );
+}else{
+    $foto = null;
+}
 
     editar($idPet,
 $nome,
