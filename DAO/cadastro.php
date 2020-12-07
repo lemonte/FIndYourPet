@@ -21,10 +21,18 @@ if ( empty($msgErro) ) {
     $arqAberto = fopen ( $imagem["tmp_name"], "r" );
     $foto = addslashes( fread ( $arqAberto , $tamanhoImg ) );
 
-    cadastrar($email, $pass, $nome, $foto, $telefone);
+    if(cadastrar($email, $pass, $nome, $foto, $telefone)){
+        header("Location:$anterior?msg=Cadastrado com sucesso") ; 
+    }else{
+        echo"
+        <script language='javascript' type='text/javascript'>
+            alert('Erro no cadastro, verifique informações ou se o E-mail já está cadastrado');
+            window.location.href='$anterior';
+        </script>"; 
+    }
 
 
-    header("Location:$anterior?msg=Cadastrado com sucesso") ;               
+                  
 } else {
     echo"
     <script language='javascript' type='text/javascript'>
