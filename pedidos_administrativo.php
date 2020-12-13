@@ -29,23 +29,23 @@
 </style>
 
 <body>
-    <nav>
-        <div class="nav-wrapper" style="background-color: #2C2C8C;">
+   <nav>
+        <div class="nav-wrapper" style="background-color: #9DC7C7;">
             <a href="#" class="brand-logo center  white-text">FindYourPet</a>   
         </div>
     </nav>
 
-    <ul id="slide-out" class="sidenav sidenav-fixed" style="background-color: #2C2C8C;">
+    <ul id="slide-out" class="sidenav sidenav-fixed" style="background-color: white;">
     <li><div class="user-view">
-      <a href="#user"><img class="circle" src="https://www.specialdog.com.br/assets/imgs/cao.png"></a>
-      <a href="#name"><span class="white-text name">Administrativo</span></a>
-      <a href="#email"><span class="white-text email">email_administrativo@gmail.com</span></a>
+      <a href="#user"><img class="circle" src="./logo.png" style="height: 200px; width:auto " ></a>
+      <a href="#name"><span class="name" style="color:#9DC7C7; font-weight: bold">Administrativo</span></a>
+      <a href="#email"><span class="email" style="color:#9DC7C7; font-weight: bold" >email_administrativo@gmail.com</span></a>
     </div></li>
-    <li><a href="./home_administrativo.php" class="white-text" ><i class="material-icons white-text">assignment_turned_in</i>Cartões de anuncio</a></li>
-    <li><a href="./pedidos_administrativo.php" class="white-text" ><i class="material-icons white-text">assignment</i>Pedidos para anunciar </a></li>
-    <li><a href="./usuarios_administrativo.php" class="white-text" ><i class="material-icons white-text">account_circle</i>Usuários administrativos </a></li>
+    <li><a href="./home_administrativo.php" style="color:#9DC7C7" ><i class="material-icons">assignment_turned_in</i>Cartões de anuncio</a></li>
+    <li><a href="./pedidos_administrativo.php" style="color:#9DC7C7" ><i class="material-icons ">assignment</i>Pedidos para anunciar </a></li>
+    <li><a href="./usuarios_administrativo.php" style="color:#9DC7C7" ><i class="material-icons">account_circle</i>Usuários administrativos </a></li>
     <li><div class="divider"></div></li>
-    <li><a href="./index.php" class="white-text" ><i class="material-icons white-text">power_settings_new</i>Sair </a></li>
+    <li><a href="./index.php" style="color:#9DC7C7" ><i class="material-icons">power_settings_new</i>Sair </a></li>
   </ul>
   <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
@@ -75,17 +75,17 @@
               <img class='activator' src='data:image/jpeg;base64,".base64_encode( $imagem )."' style='height: 250px;' />
                 <form method='post' name='formDeletar' action='./DAO/excluirDog.php' enctype = 'multipart/form-data'>
                   <input type='hidden' name='idPetDeletar' value=$idPet/>
-                  <button onclick='javascript:formDeletar.submit()'   class='btn-floating halfway-fab' style='background-color: #2C2C8C;'><i class='material-icons'>delete</i></button>
+                  <button onclick='javascript:formDeletar.submit()'   class='btn-floating halfway-fab' style='background-color: #9DC7C7;'><i class='material-icons'>delete</i></button>
                 </form>
                 <form method='post' name='formAceitar' action='./DAO/aceitarDog.php' enctype = 'multipart/form-data'>
                   <input type='hidden' name='idPetAceitar' value=$idPet/>
-                  <button onclick='javascript:formAceitar.submit()'  data-target='modal_edit'  class='btn-floating modal-trigger halfway-fab left' style='background-color: #2C2C8C;' ><i class='material-icons'>check</i></button>
+                  <button onclick='javascript:formAceitar.submit()'  data-target='modal_edit'  class='btn-floating modal-trigger halfway-fab left' style='background-color: #9DC7C7;' ><i class='material-icons'>check</i></button>
                 </form>
               </div>
               <div class='card-content center'>
               <span class='card-title center'> $nome </span>
                 <p>$breve_descricao</p>
-                <button data-target='modal_card $idPet' class='btn modal-trigger' style='background-color: #2C2C8C;'  onclick='myFunction()'>
+                <button data-target='modal_card $idPet' class='btn modal-trigger' style='background-color: #9DC7C7;'  onclick='myFunction()'>
                 Ver mais sobre </button>
               </div>
             </div>
@@ -94,10 +94,13 @@
           
           <div id='modal_card $idPet' class='modal'>
     <div class='modal-content' style=' font-size: larger;'>
-      <h4 id='modal_nome_item' class='center'> </h4>
-      <div class='col s12 m7'>
-        <div class='row'>
-          <div class='col s6' id='modal_imagem_item'></div>
+     <h4 id='modal_nome_item' class='center'>$nome </h4>
+            <div class='col s12 m12'>
+              <div class='row'>
+                
+                <div class='col s6' id='modal_imagem_item'>
+                <img src='data:image/jpeg;base64,".base64_encode( $imagem )."'' style='height: 250px;'  alt='Minha Figura'/>	
+                </div>
           <div class='col s6 row center'><span style='font-weight: bolder; ' class='col s6 '>breve_descricao</span>
             <div class='col s6' id='modal_breve_descricao_item'>$breve_descricao</div>
           </div>

@@ -21,11 +21,11 @@ setcookie("PHPSESSID", null);
 
 <body>
   <nav class="white" role="navigation">
-    <div class="nav-wrapper" style="background-color: #2C2C8C;">
+    <div class="nav-wrapper" style="background-color: white;">
       <div class="container">
-        <a id="logo-container" href="#" class="brand-logo white-text">FindYourPet</a>
+      <img src="logo.png" class="brand-logo" style="height:  120px; top: -30px" alt="Unsplashed background img 1"/>
         <ul class="right hide-on-med-and-down">
-          <a class="white-text" onclick='abri_modal("modal1")'><i class="material-icons left">exit_to_app</i> Login</a>
+          <a onclick='abri_modal("modal1")' style="color:#9DC7C7" ><i class="material-icons left">exit_to_app</i> Login</a>
         </ul>
 
         <ul id="nav-mobile" class="sidenav">
@@ -77,7 +77,7 @@ setcookie("PHPSESSID", null);
                 <div class="row">
                   <div class="col m12">
                     <p class="right-align">
-                      <button class="btn btn-large" style="background-color: #2C2C8C;" type="button" name="action" onclick="entrar()">Login</button>
+                      <button class="btn btn-large" style="background-color: #9DC7C7;" type="button" name="action" onclick="entrar()">Login</button>
                     </p>
                   </div>
                 </div>
@@ -111,7 +111,7 @@ setcookie("PHPSESSID", null);
           $sexo = $value["sexo"];
           $animal = $value["animal"];
           $telefone = $value["telefone"];
-          $imagem = $value["imagem"];
+          $imagem = base64_encode($value["imagem"]);
           $sobre = $value["sobre"];
           $breve_descricao = $value["breve_descricao"];
           $idPet = $value["idPet"];
@@ -119,22 +119,24 @@ setcookie("PHPSESSID", null);
         <div class='col s12 m4 l3'>
         <div class='card sticky-action hoverable' style='height: 450px;'>
         <div class='card-image' >
-        <img class='activator' src='data:image/jpeg;base64,".base64_encode( $imagem )."' style='height: 250px;' />
+        <img class='activator' src='data:image/jpeg;base64,". $imagem."' style='height: 250px;' />
           </div>
           <div class='card-content'>
             <span class='card-title activator grey-text text-darken-4'> $nome  <i class='material-icons right'> more_vert </i> </span>
                   <p>$breve_descricao </p> </div> <div class='card-action'>
-                      <button data-target='modal_card $idPet' class='btn modal-trigger' style='background-color: #2C2C8C;'  onclick='myFunction()'>
+                      <button data-target='modal_card $idPet' class='btn modal-trigger' style='background-color: #9DC7C7';>
                         Ver mais sobre </button> </div> <div class='card-reveal'>
                           <span class='card-title grey-text text-darken-4'> $nome <i class='material-icons right'> close </i> </span class='center'>
                                 <p>  $sobre </p> </div> </div> </div>
           <div id='modal_card $idPet' class='modal'>
           <div class='modal-content' style=' font-size: larger;'>
-            <h4 id='modal_nome_item' class='center'> </h4>
-            <div class='col s12 m7'>
+            <h4 id='modal_nome_item' class='center'>$nome </h4>
+            <div class='col s12 m12'>
               <div class='row'>
                 
-                <div class='col s6' id='modal_imagem_item'></div>
+                <div class='col s6' id='modal_imagem_item'>
+                <img src='data:image/jpeg;base64,". $imagem."' ' style='height: 250px;'  alt='Minha Figura'/>	
+                </div>
                 <div class='col s6 row center'><span style='font-weight: bolder; ' class='col s6 '>breve_descricao</span>
                   <div class='col s6' id='modal_breve_descricao_item'>$breve_descricao</div>
                 </div>
@@ -211,7 +213,7 @@ setcookie("PHPSESSID", null);
             plataforma para que possamos ajudar a encontrar o dono ideal.
           </h3>
           <div class="row left">
-            <button class="btn-large" style="background-color: #2C2C8C;" onclick='abri_modal("modal2")'> Doar</button>
+            <button class="btn-large" style="background-color: #9DC7C7;" onclick='abri_modal("modal2")'> Doar</button>
           </div>
         </div>
         <br><br>
@@ -231,7 +233,7 @@ setcookie("PHPSESSID", null);
         <div class="col s12 m6">
           <h5>Adicione uma imagem para que possamos conhece-lo</h5>
             <div>
-              <input id="imagem" type="file" name="imagem">
+              <input id="img-input" type="file" name="imagem">
             </div>
             <div id="img-container">
               <img id="preview" src="" class="col s12">
@@ -415,7 +417,7 @@ setcookie("PHPSESSID", null);
 
     </div>
   </div>
-  <footer class="page-footer" style="background-color: #2C2C8C;">
+  <footer class="page-footer" style="background-color: #9DC7C7;">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
@@ -463,17 +465,16 @@ setcookie("PHPSESSID", null);
      
     }
 
-    function myFunction(arr) {
-      var image = `<img class='activator center' src=${arr.imagem} style='max-height: "100%"; max-width: 400px; ' />`
-      document.getElementById("modal_nome_item").innerHTML = arr.nome;
-      document.getElementById("modal_imagem_item").innerHTML = image;
-      document.getElementById("modal_idade_item").innerHTML = arr.idade;
-      document.getElementById("modal_sexo_item").innerHTML = arr.sexo;
-      document.getElementById("modal_animal_item").innerHTML = arr.animal;
-      document.getElementById("modal_telefone_item").innerHTML = arr.telefone;
-      document.getElementById("modal_sobre_item").innerHTML = arr.sobre;
-      document.getElementById("modal_breve_descricao_item").innerHTML = arr.breve_descricao;
-      console.log(arr)
+    function myFunction(nome, image, idade, sexo, animal, telefone, sobre, descricao) {
+      var tag_image = `<img class='activator center' src=${image} style='max-height: "100%"; max-width: 400px; ' />`
+      document.getElementById("modal_nome_item").innerHTML = nome;
+      document.getElementById("modal_imagem_item").innerHTML = tag_image;
+      document.getElementById("modal_idade_item").innerHTML = idade;
+      document.getElementById("modal_sexo_item").innerHTML = sexo;
+      document.getElementById("modal_animal_item").innerHTML = animal;
+      document.getElementById("modal_telefone_item").innerHTML = telefone;
+      document.getElementById("modal_sobre_item").innerHTML = sobre;
+      document.getElementById("modal_breve_descricao_item").innerHTML = descricao;
     }
 
 
@@ -493,6 +494,7 @@ setcookie("PHPSESSID", null);
       if (this.files && this.files[0]) {
         var file = new FileReader();
         file.onload = function(e) {
+          console.log(e.target.result)
           document.getElementById("preview").src = e.target.result;
         };
         file.readAsDataURL(this.files[0]);
