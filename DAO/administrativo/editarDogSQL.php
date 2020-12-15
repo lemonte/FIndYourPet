@@ -8,7 +8,8 @@ $idade,
 $sexo,
 $telefone,
 $animal,
-$imagem){
+$imagem,
+$tipo_doacao){
         require './conexao.php';
         $conexao = conectar();
         $idPet = intval("$idPet");
@@ -23,7 +24,8 @@ $imagem){
             sexo = '$sexo',
             imagem = '$imagem',
             telefone = '$telefone',
-            animal = '$animal'
+            animal = '$animal',
+            tipo_doacao = '$tipo_doacao'
             WHERE pet.idPet = '$idPet'";
         }else{
 
@@ -34,7 +36,8 @@ $imagem){
             idade = '$idade',
             sexo = '$sexo',
             telefone = '$telefone',
-            animal = '$animal'
+            animal = '$animal',
+            tipo_doacao = '$tipo_doacao'
             WHERE pet.idPet = '$idPet'";
         
 

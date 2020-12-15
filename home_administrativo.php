@@ -68,6 +68,7 @@
           $breve_descricao = $value["breve_descricao"];
           $idPet = $value["idPet"];
           $dono = $value["dono"];
+          $tipo_doacao = $value["tipo_doacao"];
           echo
               
          "   
@@ -119,6 +120,9 @@
           </div>
           <div class='col s6 row center'><span style='font-weight: bolder;' class='col s6'>sobre</span>
             <div class='col s6' id='modal_sobre_item'>$sobre</div>
+          </div>
+          <div class='col s6 row center'><span style='font-weight: bolder;' class='col s6'>tipo de doação</span>
+            <div class='col s6' id='modal_tipo_item'>$tipo_doacao</div>
           </div>
         </div>
       </div>
@@ -189,6 +193,14 @@
               <input name='breve_descricao'id='breve_descricao' value=$breve_descricao type='text' class='validate'>
               <label for='breve_descricao'>Descrição breve, algo mais curto</label>
             </div>
+            <div class='input-field col s12'>
+                <select name='tipo_doacao' class='select-dropdown dropdown-trigger'>
+                    <option value='Adoção' selected >Adoção</option>
+                    <option value='Perdido'>Perdido</option>
+                    <option value='Achado'>Achado</option>
+                </select>
+                <label>Tipo de doação</label>
+            </div>
           </div>
         </div>
       </div>
@@ -218,10 +230,25 @@
 
   
 
-  
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
 
 
     <script>
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems, options);
+  });
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+
+
+
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.sidenav');
             var instances = M.Sidenav.init(elems, options);
@@ -298,9 +325,7 @@ var item_aberto = null
     }
     document.getElementById("img-input").addEventListener("change", readImage, false);
 </script>
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
+
 </body>
 
 </html>

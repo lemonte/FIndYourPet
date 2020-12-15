@@ -10,6 +10,7 @@
     $sexo = $_POST["sexo"];
     $telefone = $_POST["telefone"];
     $animal = $_POST["animal"]; 
+    $tipo_doacao = $_POST["tipo_doacao"];
 
 if(isset($_FILES["imagem"])){
     $imagem = $_FILES["imagem"];
@@ -29,7 +30,8 @@ $idade,
 $sexo,
 $telefone,
 $animal,
-$foto);
+$foto,
+$tipo_doacao);
     
     $anterior = $_SERVER['HTTP_REFERER']; //retorna a página anterior
     header("Location:$anterior");

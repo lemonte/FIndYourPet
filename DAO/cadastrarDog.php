@@ -1,6 +1,7 @@
 <?php
     include_once "funcoesUteis.php";
     
+    
     $nome = $_POST["nome"]; 
     $dono = $_POST["dono"];
     $breve_descricao = $_POST["breve_descricao"];
@@ -9,6 +10,7 @@
     $sexo = $_POST["sexo"];
     $imagem = $_FILES["imagem"];
     $telefone = $_POST["telefone"];
+    $tipo_doacao = $_POST["tipo_doacao"];
     $animal = $_POST["animal"]; 
     $msgErro = validarCampos($nome, $dono, $breve_descricao, $sobre, $idade, $sexo, $imagem, $telefone, $animal);
     $anterior = $_SERVER['HTTP_REFERER']; //retorna a página anterior
@@ -21,7 +23,7 @@
     if ( empty($msgErro) ) {            
         include_once './usuario/cadastrarDogSQL.php';
 
-        cadastrar($nome, $dono, $breve_descricao, $sobre, $idade, $sexo, $foto, $telefone, $animal);
+        cadastrar($nome, $dono, $breve_descricao, $sobre, $idade, $sexo, $foto, $telefone, $animal, $tipo_doacao);
 
 
         header("Location:$anterior") ;               

@@ -15,6 +15,7 @@
             $imagem = $registro["imagem"];
             $telefone = $registro["telefone"];
             $animal = $registro["animal"];
+            $tipo_doacao = $registro["tipo_doacao"];
 
             $array[] = array(
                 "idPet" => $idPet,
@@ -27,6 +28,7 @@
                 "imagem" => "$imagem",
                 "telefone" => $telefone,
                 "animal" => "$animal",
+                "tipo_doacao" => "$tipo_doacao",
             );
                             
         }
