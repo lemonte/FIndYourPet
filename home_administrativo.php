@@ -121,6 +121,8 @@
           <div class='col s6 row center'><span style='font-weight: bolder;' class='col s6'>sobre</span>
             <div class='col s6' id='modal_sobre_item'>$sobre</div>
           </div>
+          <div class='col s6 row center'>
+          </div>
           <div class='col s6 row center'><span style='font-weight: bolder;' class='col s6'>tipo de doação</span>
             <div class='col s6' id='modal_tipo_item'>$tipo_doacao</div>
           </div>
@@ -194,8 +196,8 @@
               <label for='breve_descricao'>Descrição breve, algo mais curto</label>
             </div>
             <div class='input-field col s12'>
-                <select name='tipo_doacao' class='select-dropdown dropdown-trigger'>
-                    <option value='Adoção' selected >Adoção</option>
+                <select name='tipo_doacao'  class='select-dropdown dropdown-trigger'>
+                    <option value='Adocao' >Adoção</option>
                     <option value='Perdido'>Perdido</option>
                     <option value='Achado'>Achado</option>
                 </select>

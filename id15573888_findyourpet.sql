@@ -23,7 +23,8 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-
+CREATE DATABASE IF NOT EXISTS id15573888_findyourpet;
+USE id15573888_findyourpet;
 --
 -- Estrutura da tabela `adm`
 --
